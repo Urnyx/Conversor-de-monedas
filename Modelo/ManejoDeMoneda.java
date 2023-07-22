@@ -17,16 +17,36 @@ public class ManejoDeMoneda {
         return tiposMoneda.get(x);
     }
     
+    public void eliminarInicio(){
+        tiposMoneda.remove(0);
+    }
+    
     public Object[] toArray(){
         return tiposMoneda.toArray();
     }
     
     // Esta función recibe en x1 la cantidad de dinero colombiano y en x2 el valor de la moneda elegida.
-    public double convertir(double x1, double x2){
+   /* public double convertirDesdePeso(double x1, double x2){
         return x1 * x2;
     }
     
-    //Esta funcion se encarga de recibir la cantidad que se desea convertir y valida que sea un tipo numerico positivo.
+    public double convertirInverso(double x1, double x2){
+        return x1 / x2;
+    }
+    */
+    
+    public double convertir(double x1, Moneda x2){
+        System.out.println(x2.getValor());
+        if(!x2.getNombre().equals("Peso Colombiano")){
+            return x1 * x2.getValor();
+        }else{
+            return x1/x2.getValor();
+        }
+    }
+    public double cambioDesdePeso(){
+        return 0;
+    }
+    //Esta funcion se encarga de recibir la cantidad que se desea convertirDesdePeso y valida que sea un tipo numerico positivo.
     public double insertarNumeroPositivo() {
     double numero = 0;
     boolean valorb = true;
@@ -42,4 +62,6 @@ public class ManejoDeMoneda {
     }
     return numero;
     }
+    
+    
 }

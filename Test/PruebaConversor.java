@@ -71,27 +71,33 @@ public class PruebaConversor {
             /*llama a la funcion que recibe y valida si el input es un numero postivo*/
             valorIngresado = monedas.insertarNumeroPositivo();
             
+           
             moneda2 =  (Moneda) JOptionPane.showInputDialog(null, 
                 "Elija a que moneda desea convertir.", "Entrada", 
                 JOptionPane.QUESTION_MESSAGE, null, monedas.toArray(), monedas.get(0));
             
             boolean validador = true;
+           
             while(validador == true){
-                
                 if(!moneda.getNombre().equals(moneda2.getNombre()))
                     validador = false;
-                else
+                else{
                     JOptionPane.showMessageDialog(null, "No puedes convertir dos monedas iguales");
+                    moneda2 =  (Moneda) JOptionPane.showInputDialog(null, 
+                    "Elija a que moneda desea convertir.", "Entrada", 
+                    JOptionPane.QUESTION_MESSAGE, null, monedas.toArray(), monedas.get(0));
+                }
             }
             
             
-            if(moneda.getNombre().equals("Peso Colombiano")){
-                resultado = monedas.convertir(valorIngresado, moneda2);
+            if(moneda2.getNombre().equals("Peso Colombiano")){
+                
+                resultado = monedas.convertirInverso(valorIngresado, moneda.getValor());
             }else{
-                resultado = monedas.convertir(valorIngresado, moneda);
+                resultado = monedas.convertirDesdePeso(valorIngresado, moneda2.getValor());
             }
                 
-                
+                System.out.println(resultado);
             
             JOptionPane.showMessageDialog(null, resultado);
             

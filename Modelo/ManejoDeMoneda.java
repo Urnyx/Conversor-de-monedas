@@ -26,23 +26,14 @@ public class ManejoDeMoneda {
     }
     
     // Esta función recibe en x1 la cantidad de dinero colombiano y en x2 el valor de la moneda elegida.
-   /* public double convertirDesdePeso(double x1, double x2){
+   public double convertirDesdePeso(double x1, double x2){
         return x1 * x2;
     }
     
     public double convertirInverso(double x1, double x2){
         return x1 / x2;
     }
-    */
-    
-    public double convertir(double x1, Moneda x2){
-        System.out.println(x2.getValor());
-        if(!x2.getNombre().equals("Peso Colombiano")){
-            return x1 * x2.getValor();
-        }else{
-            return x1/x2.getValor();
-        }
-    }
+       
     public double cambioDesdePeso(){
         return 0;
     }

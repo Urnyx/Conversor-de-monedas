@@ -43,11 +43,9 @@ public class PruebaConversor {
         monedas.add(new Moneda("Yen", 0.03504));
         monedas.add(new Moneda("Libra", 0.000194));
         
-
-        
          String conversor;  
          Moneda moneda; 
-         Moneda moneda2;
+         Moneda moneda2 = null;
          double valorIngresado;
          double resultado; 
          boolean exit = true;
@@ -64,40 +62,25 @@ public class PruebaConversor {
                 tipoConversion.toArray(), tipoConversion.get(0));
             
             /*solicitud del tipo de moneda que desea convertir*/
-                 moneda =  (Moneda) JOptionPane.showInputDialog(null, 
-                "Elija la moneda que desea convertir.", "Entrada", 
-                JOptionPane.QUESTION_MESSAGE, null, monedas.toArray(), monedas.get(0));
+            moneda = primerMoneda(monedas);
                  
             /*llama a la funcion que recibe y valida si el input es un numero postivo*/
-            valorIngresado = monedas.insertarNumeroPositivo();
+            valorIngresado = insertarNumeroPositivo();
             
-           
-            moneda2 =  (Moneda) JOptionPane.showInputDialog(null, 
-                "Elija a que moneda desea convertir.", "Entrada", 
-                JOptionPane.QUESTION_MESSAGE, null, monedas.toArray(), monedas.get(0));
-            
-            boolean validador = true;
-           
-            while(validador == true){
-                if(!moneda.getNombre().equals(moneda2.getNombre()))
-                    validador = false;
-                else{
-                    JOptionPane.showMessageDialog(null, "No puedes convertir dos monedas iguales");
-                    moneda2 =  (Moneda) JOptionPane.showInputDialog(null, 
-                    "Elija a que moneda desea convertir.", "Entrada", 
-                    JOptionPane.QUESTION_MESSAGE, null, monedas.toArray(), monedas.get(0));
+                       
+            while(moneda!=null){
+                moneda2 =  segundaMoneda(monedas);
+                if(moneda.getNombre().equals(moneda2.getNombre())){
+                    break;
                 }
+                JOptionPane.showMessageDialog(null, "No puedes ingresar la misma moneda");
             }
             
-            
             if(moneda2.getNombre().equals("Peso Colombiano")){
-                
                 resultado = monedas.convertirInverso(valorIngresado, moneda.getValor());
             }else{
                 resultado = monedas.convertirDesdePeso(valorIngresado, moneda2.getValor());
             }
-                
-                System.out.println(resultado);
             
             JOptionPane.showMessageDialog(null, resultado);
             
@@ -114,7 +97,36 @@ public class PruebaConversor {
         
         
     }
+    public static Moneda primerMoneda(ManejoDeMoneda monedas){
+        return (Moneda) JOptionPane.showInputDialog(null, 
+                "Elija la moneda que desea convertir.", "Entrada", 
+                JOptionPane.QUESTION_MESSAGE, null, monedas.toArray(), monedas.get(0));
+    }
+    
+    //Esta funcion se encarga de recibir la cantidad que se desea convertirDesdePeso y valida que sea un tipo numerico positivo.
+    public static double insertarNumeroPositivo() {
+    double numero = 0;
+    boolean valorb = true;
 
+    while(valorb){
+        String valorIngresado = JOptionPane.showInputDialog("Ingrese la cantidad de dinero que desea convertir.");
+        try {
+            numero = Double.parseDouble(valorIngresado);
+            valorb = false;
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Error: Ingresa un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    return numero;
+    }
+    
+    public static Moneda segundaMoneda(ManejoDeMoneda monedas){
+        return  (Moneda) JOptionPane.showInputDialog(null, 
+                "Elija a que moneda desea convertir.", "Entrada", 
+                JOptionPane.QUESTION_MESSAGE, null, monedas.toArray(), monedas.get(0));
+    }
+    
+            
     }
 
 

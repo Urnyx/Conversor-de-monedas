@@ -37,22 +37,6 @@ public class ManejoDeMoneda {
     public double cambioDesdePeso(){
         return 0;
     }
-    //Esta funcion se encarga de recibir la cantidad que se desea convertirDesdePeso y valida que sea un tipo numerico positivo.
-    public double insertarNumeroPositivo() {
-    double numero = 0;
-    boolean valorb = true;
-
-    while(valorb){
-        String valorIngresado = JOptionPane.showInputDialog("Ingrese la cantidad de dinero que desea convertir.");
-        try {
-            numero = Double.parseDouble(valorIngresado);
-            valorb = false;
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Error: Ingresa un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    return numero;
-    }
-    
+   
     
 }

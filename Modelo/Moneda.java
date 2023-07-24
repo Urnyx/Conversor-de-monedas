@@ -2,19 +2,26 @@
 package Modelo;
 
 
-// Esta clase sera la que guarte el nombre y el valor de las monedas en comparacion a las de colombia.
-
+/** Esta clase guarda el nombre y 
+ * el valor de las monedas en comparacion a las de colombia.
+ **/
 public class Moneda {
     private String nombre;
     private double valor;
 
-// toString solo devuelve el nombre de la moneda, es lo unico necesario de acuerdo a la logica del negocio.
+/** 
+ * toString solo devuelve el nombre de la moneda 
+ **/
     @Override
     public String toString() {
         return nombre;
     }
 
-    
+/** El constructor recibe el nombre y el valor de la moneda.
+ * 
+ * @param nombre
+ * @param valor 
+ */    
     public Moneda(String nombre, double valor) {
         this.nombre = nombre;
         this.valor = valor;

@@ -11,39 +11,27 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+/**
+ * Implementación de interface grafica.
+ * @author Daniel
+ */
 
 public class ConversorGui extends javax.swing.JFrame {
-
-    private ArrayList<Moneda> monedas = new ArrayList<>(); //Array con las monedas.
-    private ArrayList<String> tipoConversion = new ArrayList<>(); //Array con los tipos de conversion que maneja el programa.
     
-    // Esta función recibe en x1 la cantidad de dinero colombiano y en x2 el valor de la moneda elegida.
-    private double convertirDesdePeso(double x1, double x2){
-        return x1 * x2;
-    }
+    /** Creacion lista donde se almacenaran las monedas. */
     
-    private double convertirInverso(double x1, double x2){
-        return x1 / x2;
-    }
+    private ArrayList<Moneda> monedas = new ArrayList<>();
     
-    private double obtenerValorPorNombre(String nombre, ArrayList moneda){
-        double resultado = 0;
-        for (Moneda moneda1 : monedas) {
-            if(nombre.equals(moneda1.toString()))
-                resultado = moneda1.getValor();
-        }
-        return resultado;
-    }
+    /** Objeto con las operaciones de conversion. */
     
+    ManejoDeMoneda operacionesDeMoneda = new ManejoDeMoneda();
+ 
     /**
      * Creates new form ConversorGui
      */
     public ConversorGui() {
         initComponents();
         setIconImage(getIconImage());
-        
-        tipoConversion.add("Conversor de Moneda");
-        tipoConversion.add("otros conversores");
         
         monedas.add(new Moneda("Peso Colombiano", 0));
         monedas.add(new Moneda("Dólar", 0.00025));
@@ -52,25 +40,16 @@ public class ConversorGui extends javax.swing.JFrame {
         monedas.add(new Moneda("Libra", 0.000194));
         
         for (Moneda moneda : monedas) {
-            jComboBox1.addItem(moneda.toString());
+            jComboBoxOpcionPrimerMoneda.addItem(moneda.toString());
         }
         
         for (Moneda moneda : monedas) {
-            if(!moneda.toString().equals(jComboBox1.getSelectedItem().toString())){
-                jComboBox2.addItem(moneda.toString());
+            if(!moneda.toString().equals(jComboBoxOpcionPrimerMoneda.getSelectedItem().toString())){
+                jComboBoxOpcionMoneda2.addItem(moneda.toString());
             }
         }
-        
-        
-        
-        
-        
-          
-        
     }
     
-    
-        
     //Icono del programa.
     @Override
     public Image getIconImage(){
@@ -89,31 +68,34 @@ public class ConversorGui extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelMensajeBienvenido = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        jComboBoxOpcionPrimerMoneda = new javax.swing.JComboBox<>();
+        jComboBoxOpcionMoneda2 = new javax.swing.JComboBox<>();
+        jButtonConvertir = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldCantidadIngresada = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Conversor");
+        setMaximumSize(new java.awt.Dimension(600, 400));
+        setMinimumSize(new java.awt.Dimension(600, 400));
+        setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(232, 195, 158));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Conversores");
+        jLabelTitulo.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitulo.setText("Conversores");
 
         jButton2.setBackground(new java.awt.Color(250, 250, 250));
         jButton2.setText("Monedas");
@@ -145,7 +127,7 @@ public class ConversorGui extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
@@ -159,7 +141,7 @@ public class ConversorGui extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(46, 46, 46)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(jButton2)
                 .addGap(27, 27, 27)
@@ -176,44 +158,44 @@ public class ConversorGui extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pngwing.com.png"))); // NOI18N
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("¡Bienvenido!");
+        jLabelMensajeBienvenido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelMensajeBienvenido.setText("¡Bienvenido!");
 
         jLabel4.setText("Mi Moneda:");
 
         jLabel5.setText("Moneda a Convertir:");
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxOpcionPrimerMoneda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboBoxOpcionPrimerMonedaActionPerformed(evt);
             }
         });
 
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxOpcionMoneda2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                jComboBoxOpcionMoneda2ActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(238, 195, 158));
-        jButton1.setText("Convertir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonConvertir.setBackground(new java.awt.Color(238, 195, 158));
+        jButtonConvertir.setText("Convertir");
+        jButtonConvertir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonConvertirActionPerformed(evt);
             }
         });
 
         jLabel6.setText("Cantidad:");
 
-        jTextField1.setToolTipText("");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldCantidadIngresada.setToolTipText("");
+        jTextFieldCantidadIngresada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldCantidadIngresadaActionPerformed(evt);
             }
         });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTextFieldCantidadIngresada.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
+                jTextFieldCantidadIngresadaKeyTyped(evt);
             }
         });
 
@@ -222,24 +204,24 @@ public class ConversorGui extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelMensajeBienvenido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1)
+                        .addComponent(jComboBoxOpcionMoneda2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonConvertir)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(99, Short.MAX_VALUE))
+                            .addComponent(jTextFieldCantidadIngresada)
+                            .addComponent(jComboBoxOpcionPrimerMoneda, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,25 +229,25 @@ public class ConversorGui extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(jLabelMensajeBienvenido)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldCantidadIngresada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxOpcionPrimerMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxOpcionMoneda2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(jButtonConvertir)
                 .addContainerGap(85, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 420, 400));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 440, 400));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -279,65 +261,90 @@ public class ConversorGui extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+    /**
+     * Función encargada de realizar la conversión de las monedas.
+     * @param evt 
+     */
+    private void jButtonConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConvertirActionPerformed
         
-        String dato1 = jComboBox1.getSelectedItem().toString();
-        String dato2 = jComboBox2.getSelectedItem().toString();
+        String dato1 = jComboBoxOpcionPrimerMoneda.getSelectedItem().toString();
+        String dato2 = jComboBoxOpcionMoneda2.getSelectedItem().toString();
         double resultado;
-        double valorIngresado = Double.parseDouble(jTextField1.getText());
+        double valorIngresado = Double.parseDouble(jTextFieldCantidadIngresada.getText());
         
         if(dato1.equals("Peso Colombiano")){
-            resultado = convertirDesdePeso(valorIngresado, obtenerValorPorNombre(dato2, monedas));
+            resultado = operacionesDeMoneda.convertirDesdePeso(valorIngresado, operacionesDeMoneda.obtenerValorPorNombre(dato2, monedas));
         }else{
-            resultado = convertirInverso(valorIngresado, obtenerValorPorNombre(dato1, monedas));
+            resultado = operacionesDeMoneda.convertirInverso(valorIngresado, operacionesDeMoneda.obtenerValorPorNombre(dato1, monedas));
         }
         JOptionPane.showMessageDialog(rootPane, resultado);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonConvertirActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboBoxOpcionPrimerMonedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOpcionPrimerMonedaActionPerformed
        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboBoxOpcionPrimerMonedaActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-       
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void jTextFieldCantidadIngresadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCantidadIngresadaActionPerformed
+       // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldCantidadIngresadaActionPerformed
+    /**
+     * Función encargada de regular las opciones del segundo comboBox,
+     * Si el usuario selecciona una opción diferente de "Peso Colombiano",
+     * solo podra convertir a "Peso colombiano".
+     * @param evt 
+     */
+    private void jComboBoxOpcionMoneda2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOpcionMoneda2ActionPerformed
         
-        jComboBox1.addActionListener(new ActionListener() {
+        jComboBoxOpcionPrimerMoneda.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(jComboBox1.getSelectedItem().toString().equals("Peso Colombiano")){
-                    jComboBox2.removeAllItems();
-                String seleccion = jComboBox1.getSelectedItem().toString();
+                if(jComboBoxOpcionPrimerMoneda.getSelectedItem().toString().equals("Peso Colombiano")){
+                    jComboBoxOpcionMoneda2.removeAllItems();
+                String seleccion = jComboBoxOpcionPrimerMoneda.getSelectedItem().toString();
                 
                 for (Moneda moneda : monedas) {
                     if (!seleccion.equals(moneda.getNombre())) {
                         
-                        jComboBox2.addItem(moneda.getNombre());
+                        jComboBoxOpcionMoneda2.addItem(moneda.getNombre());
                     }
                 }
                 }else{
-                    jComboBox2.removeAllItems();
-                    jComboBox2.addItem("Peso Colombiano");
+                    jComboBoxOpcionMoneda2.removeAllItems();
+                    jComboBoxOpcionMoneda2.addItem("Peso Colombiano");
                 }
             }
         });
-    }//GEN-LAST:event_jComboBox2ActionPerformed
-
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+    }//GEN-LAST:event_jComboBoxOpcionMoneda2ActionPerformed
+    /**
+     * Esta función obliga al usuario a solo usar caracteres numeros y ".".
+     * @param evt 
+     */
+    private void jTextFieldCantidadIngresadaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCantidadIngresadaKeyTyped
         char c = evt.getKeyChar();
-        
-        if(c<'0' || c>'9'||c == '.')
+        String text = jTextFieldCantidadIngresada.getText();
+
+    if (c == '.') {
+        // Verificar si ya existe un punto en el texto o si es el primer carácter
+        if (text.contains(".") || text.isEmpty()) {
             evt.consume();
-    }//GEN-LAST:event_jTextField1KeyTyped
+        }
+    } else if (c < '0' || c > '9') {
+        // Verificar si el carácter no es un dígito numérico
+        evt.consume();
+    }
+
+    }//GEN-LAST:event_jTextFieldCantidadIngresadaKeyTyped
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    /**
+     * Cierra el programa cuando se pulsa usuario presiona "Salir".
+     * @param evt 
+     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -363,21 +370,21 @@ public class ConversorGui extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jButtonConvertir;
+    private javax.swing.JComboBox<String> jComboBoxOpcionMoneda2;
+    private javax.swing.JComboBox<String> jComboBoxOpcionPrimerMoneda;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelMensajeBienvenido;
+    private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldCantidadIngresada;
     // End of variables declaration//GEN-END:variables
 }
